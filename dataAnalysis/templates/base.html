@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <title></title>
+        <style>
+            h1 {
+
+                padding-top: 15px;
+            }
+            h2{
+                padding-top: 20px;
+            }
+            .row {
+                padding-top: 30px;
+                align-items: center;
+            }
+            #links p{
+                align-items: flex-start;
+            }
+            h5{
+                padding-top:5px;
+            }
+            #seperator{
+                float: right;
+                border-right: 1px solid;
+            }
+            .sectionSeperator{
+                padding-top:1px;
+                border-top: 1px solid;
+                border-color: gray;
+            }
+            .row#userRow{
+                padding-top: 0px;
+            }
+            .dataFooter{
+                padding-top: 80px;
+            }
+        </style>
+    </head>
+    <body>
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Inbeeo Data Analysis</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+    {% block content %}
+    {% endblock %}
+    </div>
+    <div class="dataFooter">
+    </div>
+    </body>
+</html>
