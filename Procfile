@@ -1,1 +1,1 @@
-web: gunicorn dataAnalysis.wsgi
+web: gunicorn InbeeoAssignment.wsgi
