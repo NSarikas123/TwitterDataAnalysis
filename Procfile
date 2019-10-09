@@ -1,1 +1,1 @@
-web: gunicorn InbeeoAssignment.wsgi
+web: gunicorn TweetDataApp.wsgi

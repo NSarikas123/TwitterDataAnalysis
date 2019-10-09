@@ -41,7 +41,6 @@ def home(request):
 
     #The data that will be passed through into the front end
     data = {
-        'tweets' : TweetData.objects.all(),
         'retweetUserCount' : retweetUserCount,
         'tweetWordCounts' : tweetWordCounts,
         'userDescriptionWordsCount' : userDescriptionWordsCount,
@@ -56,24 +55,25 @@ def home(request):
 #an option to exlude trump is also implemented
 #returns each word as a list
 def getRetweetedUsers(excludeTrump):
-    query ='select * from "dataAnalysis_tweetdata"'
+    query = TweetData.objects.all().values('retweetedUser')
     querySet = []
-    for i in TweetData.objects.raw(query):
+    for i in query:
+        currentRetweetedUser = i.get('retweetedUser')
         if excludeTrump == False:
-            querySet.append(i.retweetedUser)
-        if i.retweetedUser != "@realDonaldTrump" and excludeTrump == True:
-            querySet.append(i.retweetedUser)
+            querySet.append(currentRetweetedUser)
+        if currentRetweetedUser != "@realDonaldTrump" and excludeTrump == True:
+            querySet.append(currentRetweetedUser)
     return querySet
 
 #Gets all tweets from the database and returns each word as a list
 def getTweetedWords():
-    query ='select * from "dataAnalysis_tweetdata"'
+    query = TweetData.objects.all().values('tweetText')
     querySet = []
     #Blacklist of common words that were not needed
     blacklist= ["to","RT","the","from","the","but","at","their","your","know"]
-    for i in TweetData.objects.raw(query):
+    for i in query:
         #i is string, split() splits the string into a list of words
-        eachWord = i.tweetText.split()
+        eachWord = i.get('tweetText').split()
         for j in eachWord:
             #Removing selected punctuation
             word = j.replace('"','')
@@ -96,17 +96,18 @@ def getTweets():
 
 #Gets every word from the Users Description from the database and returns each word as a list
 def getUsersDescription():
-    query ='select * from "dataAnalysis_tweetdata"'
-    querySet = []
     #Blacklist for words User Desciptions
     blacklist = ["and","the","of","to","I","a","&","in","for","my","is","are","with","on","??","????","not","-","our","by","|","you","The","be","all","who","that","at","from","am","A","I'm"]
-    for i in TweetData.objects.raw(query):
-        if i.userDescription is not None and i.userDescription != '':
-            eachWord = i.userDescription.split()
-            for j in eachWord:
+    queryset = TweetData.objects.all().values('userDescription')
+    eachWord = []
+    for i in queryset:
+        eachUserDescription = i.get('userDescription')
+        if eachUserDescription is not None and eachUserDescription != '':
+            eachWordInDescription = eachUserDescription.split()
+            for j in eachWordInDescription:
                 if j not in blacklist:
-                    querySet.append(j)
-    return querySet
+                    eachWord.append(j)
+    return eachWord
 
 #Counts how many times each word occurs
 #returns (word, frequency) as sorted tuple decending by frequency
@@ -127,25 +128,27 @@ def countWords(tweetedWords):
 #Gets all hashtags in userDescription
 #Returns a list of all the hashtags mentioned
 def getHashTags():
-    query ='select * from "dataAnalysis_tweetdata"'
+    query = TweetData.objects.all().values('userDescription')
     querySet = []
-    for i in TweetData.objects.raw(query):
-        if i.userDescription is not None and i.userDescription != '':
-            eachWord = i.userDescription.split()
+    for i in query:
+        eachUserDescription = i.get('userDescription')
+        if eachUserDescription is not None and eachUserDescription != '':
+            eachWord = eachUserDescription.split()
             for j in eachWord:
                 hashtags = re.findall(r"#\w+", j)
                 if hashtags:
                     querySet.append(hashtags[0])
     return querySet
 
-#Gets all hyperlinks mentioned in tweets
+#Gets all hyperlinks mentioned in user desciptions
 #Returns all the links in a list
 def getHyperLinks():
-    query ='select * from "dataAnalysis_tweetdata"'
+    query = TweetData.objects.all().values('userDescription')
     querySet = []
-    for i in TweetData.objects.raw(query):
-        if i.userDescription is not None and i.userDescription != '':
-            eachWord = i.userDescription.split()
+    for i in query:
+        eachUserDescription = i.get('userDescription')
+        if eachUserDescription is not None and eachUserDescription != '':
+            eachWord = eachUserDescription.split()
             for j in eachWord:
                 #Some regular expression to get both https and http links
                 hyperlinkHTTPS = re.findall("https:+.*",j)
