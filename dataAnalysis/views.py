@@ -125,6 +125,7 @@ def countWords(tweetedWords):
     sortedDict = sorted(wordInfo.items(), key=lambda x:x[1],reverse=True)
     return sortedDict
 
+
 #Gets all hashtags in userDescription
 #Returns a list of all the hashtags mentioned
 def getHashTags():
