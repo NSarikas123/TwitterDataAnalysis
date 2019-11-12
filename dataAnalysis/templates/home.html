@@ -1,0 +1,442 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Welcome</h1>
+<p>The aim of the following data is to shed light on the perception surrounding drug pricing, this is done by taking a dataset of tweets from September 1st and the 23rd 2018 and analysing the content.</p>
+<h2>Thought Process</h2>
+<ol>
+    <li>To begin, an understanding of the data needs to be had</li>
+    <li>To achieve this, the nature of the tweets are focusing on has to be laid out</li>
+    <li>This is done by breaking down what words are used in each tweet and the descriptions of the users to try and find more out about the users</li>
+    <li>With this in mind, what hashtags were used and what articles were linked gives a great overview on the perception of the pharmaceutical industry</li>
+    <li>Many tweets were retweets, so seeing who was retweeted and who they are is also an important note</li>
+</ol>
+<div class="row">
+    <div class="col-md-12">
+        <div class="sectionSeperator">
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <h2>Word Count Across All Tweets</h2>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        {% load static %}
+        <img src="{% static "images/TreemapForTweetWords.png" %}" class="img-fluid">
+    </div>
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tweeted Words</th>
+                    <th>Frequency</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in tweetWordCounts %}
+                    <tr>
+                        <td>{{ i.0 }}</td>
+                        <td>{{ i.1 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <h4>What This Means</h4>
+    <ul>
+        <li>As the purpose of this sub-dataset was to see what the nature of the tweets were, it was best to see what words were used and how many times as it gives the analysis some direction of where to go</li>
+        <li>The following data shows every word used in each tweet and how many times</li>
+    </ul>
+    <p>On face value, this data does not represent a huge amount, however what it does do is lay out that the majority of people who discuss drug pricing issues seem to be of political nature, however this alone is not strong enough grounds to make that assumption</p>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="sectionSeperator">
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <h2>Word Count Across All User's Description</h2>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Words In Desciption</th>
+                    <th>Frequency</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in userDescriptionWordsCount %}
+                    <tr>
+                        <td>{{ i.0 }}</td>
+                        <td>{{ i.1 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-8">
+        {% load static %}
+        <img src="{% static "images/TreemapForWordsUsedinDescriptions.png" %}" class="img-fluid">
+    </div>
+</div>
+<div class="row">
+    <h4>What This Means</h4>
+    <ul>
+        <li>The data displayed above was created to find out more about the users that are tweeting to understand the audience more thoroughly</li>
+        <li>This was done by taking each word used in user's description and counting how many times it has been mentioned</li>
+    </ul>
+    <p>From this data, there is evidence to suggest that there is definitely a political leaning for users as among the top 9 results are #Maga, Trump, #Kag, American and President. Although it is unfair to take out of context words and conclude any political leaning amongst users</p>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="sectionSeperator">
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <h2>Most Used Hashtags in Users Descriptions</h2>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        {% load static %}
+        <img src="{% static "images/TreemapForHashtagsUsedinDescriptions.png" %}" class="img-fluid">
+    </div>
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>HashTags Used</th>
+                    <th>Frequency</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in hashtagCounts %}
+                    <tr>
+                        <td>{{ i.0 }}</td>
+                        <td>{{ i.1 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <h4>What This Means</h4>
+    <p>The data displayed above further analyses users by seeing what hashtags are included in their description, hashtags give a better idea of what the user is more inclined of because they are more personal as it represents more of an idea</p>
+    <p>The following results show that the users discussing pharmaceutical pricing are those who are more politically inclined through the top results. The largest presence being those who are considered conservative through the hashtags MAGA, KAG, 2A,WWG1WGA and Trump2020. Those who could be considered liberal also follow are also present in the hashtags</p>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="sectionSeperator">
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <h2>Most Retweeted User</h2>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Retweeted User</th>
+                    <th>Frequency</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in retweetUserCount %}
+                    <tr>
+                        <td>{{ i.0 }}</td>
+                        <td>{{ i.1 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-8">
+        {% load static %}
+        <img src="{% static "images/BubbleGraphForMostRetweets.png" %}" class="img-fluid">
+    </div>
+</div>
+<div class="row">
+    <p>The following data shows which users were retweeted the most, quite clearly, @realDonaldTrump overshadows the other users due to his large following and it would be fair to assume that conservatives are likely to follow him, showing the presence of potential conservatism surrounding the issue of drug pricing</p>
+</div>
+<div class="row">
+    <h3>Users in Question:</h3>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h4>@realDonaldTrump<h4>
+    </div>
+    <div class="col-md-4">
+        <h4>@AARPadvocates<h4>
+    </div>
+    <div class="col-md-4">
+        <h4>@GraceUnderFire<h4>
+    </div>
+</div>
+
+<div class="row" id="userRow">
+    <div class="col-md-4">
+        <ul>
+            <li>President of the United States</li>
+            <li>Followers: 64.8m</li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul>
+            <li>Nonprofit, Nonpartisan organization</li>
+            <li>Fighting to lower pharmaceutical prices</li>
+            <li>Followers: 46.4k</li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul>
+            <li>An account which supports the democrats</li>
+            <li>Followers: 1,995</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h4>@ACUConservative<h4>
+    </div>
+    <div class="col-md-4">
+        <h4>@LCNM99<h4>
+    </div>
+    <div class="col-md-4">
+        <h4>@politvidchannel<h4>
+    </div>
+</div>
+<div class="row" id="userRow">
+    <div class="col-md-4">
+        <ul>
+            <li>Official Twitter account of the American Conservative</li>
+            <li>Followers: 35.1k</li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul>
+            <li>Account no longer exists</li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul>
+            <li>An account which tweets political news stories</li>
+            <li>Followers: 88.2k</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h4>@JohnJamesMI<h4>
+    </div>
+    <div class="col-md-4">
+        <h4>@tictoc<h4>
+    </div>
+    <div class="col-md-4">
+        <h4>@RWPUSA<h4>
+    </div>
+</div>
+<div class="row" id="userRow">
+    <div class="col-md-4">
+        <ul>
+            <li>Conservative, businessman, running for senate</li>
+            <li>Followers: 186k</li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul>
+            <li>Bloomberg TicToc, global news</li>
+            <li>Followers: 798k</li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul>
+            <li>Former chief White House ethics lawyer</li>
+            <li>Followers: 626k</li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="row">
+    <h2>Most Retweeted User Without Donald Trump</h2>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {% load static %}
+        <img src="{% static "images/BubbleGraphForMostRetweetswithoutTrump.png" %}" class="img-fluid">
+    </div>
+    <div class="col-md-6">
+        <ul>
+            <li>This graph is present to show the scale of @realDonaldTrump compared to the other users</li>
+            <li>From the short bio of the top users retweeted, it is clear that the largest voices on the topic at hand are largely conservative with news sources coming second</li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="sectionSeperator">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+    <h2>Links Mentioned In Tweets</h2>
+</div>
+<div class="row" id="links">
+    <div class="col-md-8">
+        <h4><a href="https://t.co/Gaxx9mhdx9">Drug Patent Watch (pharmaceutical Consultant)</a></h4>
+        <ul>
+            <li>Drug price consulting</li>
+            <li>Helps pharma companies through patent process</li>
+            <li>Aids in market entry strategies</li>
+            <li>Also provides business and market analytics</li>
+        </ul>
+
+        <h4><a href="https://t.co/v62M2j8E9E">Concervative News Daily</a></h4>
+        <p>Their summary on there google search: "Where Americans go for news, current events and commentary they can trust - Conservative News Website for U.S. News, Political Cartoons and more."</p>
+
+        <h4><a href="https://t.co/rMtoBj8Fez">https://github.com/thisisdaryn/SenateTweets</a></h4>
+        <p>A GitHub repository for all the US Senators tweets which are updated every quarter or so</p>
+
+        <h4><a href="https://t.co/OhdS2EhSbk">Bloomberg Businessweek</a></h4>
+        <p>The link directed to a subscription page for Bloomberg Businessweek, however Bloomberg is a american weekly business magazine</p>
+
+        <h4><a href="https://t.co/TMq9vc5hZk">Article on Dr Vincent Rajkumar</a></h4>
+        <ul>
+            <li>https://www.mayo.edu/research/faculty/rajkumar-s-vincent-m-d/bio-00085953: "is engaged in clinical, epidemiological and laboratory research in myeloma and related disorders"</li>
+            <li>Has quite a large twitter following (for a doctor/ professor) with 12.5k followers</li>
+            <li>Retweets a link to an article "Drugmakers, Worried About Losing Pricing Power, Are Lobbying Hard" which is blocked by a paywall</li>
+            <li>Seems to be for lowering drugs prices, with the tweet: "We cannot have a system where every “me too” drug can be priced exorbitantly, every marginally active cancer drug prices >$125,000/yr, and allow price increases year after year on old and new drugs several times more than inflation. I’m all for rewarding innovation."</li>
+        </ul>
+
+    </div>
+    <div class="col-md-4" style="padding-left:30px; border-left:1px solid #A9A9A9;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Links</th>
+                    <th>Frequency</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in linksCounts %}
+                    <tr>
+                        <td>{{ i.0 }}</td>
+                        <td>{{ i.1 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="sectionSeperator">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="row">
+    <h2>Most Common Tweets</h2>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tweet</th>
+                    <th>Frequency</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in tweetCount %}
+                    <tr>
+                        <td>{{ i.0 }}</td>
+                        <td>{{ i.1 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <h2>Tweet Analysis</h2>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p>The overall consensus of the most popular tweets suggests that pharmaceutical prices should be lower. This opinion does not seem to be bias towards a certain political leaning, as the most popular retweeted users have a negative view on the pharmaceutical industry. The following tweets are the full length versions of the most common tweets:</p>
+    </div>
+</div>
+<div class="row">
+    <ul>
+        <li>@realDonaldTrump: Americans deserve to know the lowest drug price at their pharmacy, but “gag clauses” prevent your pharmacist from telling you! I support legislation that will remove gag clauses and urge the Senate to act. #AmericanPatientsFirst</li>
+        <li>@LCNM99: Pfizer CEO gets 61% pay raise—to $27.9 million—as drug prices continue to climb</li>
+        <li>@GraceUnderFire: To b sure you get it, @GOP candidate’s company slashed cancer drug price to RUSSIA by 45% and RAISED it for AMERICANS by 20%</li>
+        <li>@JohnJamesMI: For 18 years @Stabenow has claimed to stand up against high prescription drug costs, while receiving thousands of dollars from them. When Michigan families struggled to pay for the Epipen, Stabenow benefited from Mylan's 400% price increase on the life saving device. #MISen</li>
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="sectionSeperator">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <h2>Conclusion</h2>
+    <ul>
+        <li>The aim was to get a rough idea of who is discussing these issues and what their ideals were on drug pricing</li>
+        <li>It is clear the opinion that drug and pharmaceutical pricing should be lower is common is unbiased towards political leaning</li>
+        <li>There is a greater presence of conservatism surrounding this issue</li>
+        <li>It is unfair to say that this is with great accuracy as the indicators to this were retweets, word counts and hashtags. Hashtags seemed to have provided political leaning more so than the other because out of context words are not always accurate</li>
+
+    </ul>
+
+    <h4>Further Development Possibilities</h4>
+    <ul>
+        <li>Machine Learning is definitely a good method that can be used to achieve these aims, however it is quite time consuming</li>
+        <li>More professional looking front end as it is currently very basic and spending more time in developing the front end would be greatly beneficial from a User Experience standpoint</li>
+        <li>Could potentially add JavaScript for a more aesthetically pleasing User Experience</li>
+    </ul>
+</div>
+{% endblock %}
